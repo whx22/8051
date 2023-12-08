@@ -1,0 +1,9 @@
+# ignore all file and directory
+*
+# don't ignore all directory
+!/**/
+# don't ignore all .c and .h suffix file
+!*.c
+!*.h
+# don't ignore .gitignore
+!.gitignore
