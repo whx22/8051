@@ -22,7 +22,7 @@ char days_of_month(char year, month) {
 
 /**
  * @breif 	显示模式工作函数
- 			读取DS1302中的日期数据到单片机数据区（EEPROM）
+ 			读取DS1302中的日期数据到单片机数据区（RAM）
  			并使用LCD1602显示日期数据
  * @param	无
  * @retval 	无
@@ -42,7 +42,7 @@ void TimeShow(void) {
  			设置单片机数据区（EEPROM）存储的日期
  * @param	无
  * @retval 	无
- * @note 	设置结束后，将单片机数据区（EEPROM）存储的日期存储到DS1302
+ * @note 	设置结束后，将单片机数据区（RAM）存储的日期存储到DS1302
  */
 void TimeSet(void) {
 	if (KeyNum == 2) { // 选择设置位

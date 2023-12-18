@@ -5,7 +5,7 @@ sbit DS1302_SCLK = P3^6;
 sbit DS1302_IO = P3^4;
 sbit DS1302_CE = P3^5;
 
-// 存放时间数据的数组（单片机数据区，EEPROM）
+// 存放时间数据的数组（单片机数据区，RAM）
 char DS1302_Time[] = {
 	23, // year
 	12, // month
