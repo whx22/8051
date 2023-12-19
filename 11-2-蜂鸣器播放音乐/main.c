@@ -5,7 +5,7 @@
 sbit Buzzer = P2^5;
 
 // 定义4分音符时长，单位ms
-#define SPEED 250
+#define SPEED 500
 
 #define P 	0
 #define L1	1
@@ -103,6 +103,18 @@ unsigned char code Music_SkyCity[] = {
 	H2, 4, H1, 2, H2, 2+2, M7, 4,
 	M6, 4+4+4, M6, 2, M7, 2,  
 	0xFF
+};
+
+unsigned char code Music_Birthday[] = {
+	L5, 2, L5, 2, L6, 4, L5, 4,
+	M1, 4, L7, 4+4,
+	L5, 2, L5, 2, L6, 4, L5, 4,
+	M2, 4, M1, 4+4,
+	L5, 4, L5, 4, M5, 4, M3, 4,
+	M1, 4, L7, 2, L6, 2,
+	M4, 4+2, M4, 2, M3, 4, M1, 4,
+	M2, 4, M1, 4+4,
+	0xFF		
 };
 
 unsigned char FrequenceSelect, MusicSelect;
