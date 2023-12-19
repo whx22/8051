@@ -1,3 +1,9 @@
+/**
+ *　FIXME:显示模式下，按键长按下时，程序阻塞（LCD显示时间被阻塞，DS1302没有被阻塞）
+ * 	SOLUTION:使用中断扫描按键的转态代替使用while循序阻塞
+ *  使用中断代替阻塞
+ */
+
 #include <REGX52.H>
 #include "LCD1602.h"
 #include "DS1302.h"
@@ -39,10 +45,10 @@ void TimeShow(void) {
 
 /**
  * @breif 	设置模式工作函数
- 			设置单片机数据区（EEPROM）存储的日期
+ 			设置单片机数据区（RAM）存储的日期
  * @param	无
  * @retval 	无
- * @note 	设置结束后，将单片机数据区（RAM）存储的日期存储到DS1302
+ * @note 	设置结束后，将单片机数据区（RAM）存储的日期存储到DS1302（main函数中进行）
  */
 void TimeSet(void) {
 	if (KeyNum == 2) { // 选择设置位
@@ -111,7 +117,7 @@ void main() {
 
 //	DS1302_WriteByte(0x8E, 0x00); // 解除DS1302写保护
 														  
-	DS1302_SetTime(); // 使用单片机数据区（EEPROM）存储的时间数据设置DS1302初始值
+	DS1302_SetTime(); // 使用单片机数据区（RAM）存储的时间数据初始值设置DS1302初始值
 	while (1) {
 		KeyNum = Key();
 		if (KeyNum == 1) { // 模式切换
@@ -120,7 +126,7 @@ void main() {
 				TimeSetSelect = 0; // 进入设置模式时，设置位数清零
 			} else if (MODE == 1) { // 设置模式 -> 显示模式 
 				MODE = 0;
-				DS1302_SetTime(); // 退出设置模式时，保存设置 
+				DS1302_SetTime(); // 退出设置模式时，保存设置到DS1302中
 			}
 		}
 		switch (MODE) {

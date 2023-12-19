@@ -2,9 +2,9 @@
 #include "Delay.h"
 #include "MatrixLED.h"
 
-// code keywork : 将动画数组存放到存放代码的flash中，默认数据存放置EEPROM中
-// EEPROM : 数据段存储器，存放全局变量，静态变量，存储空间小，初始化后不可以修改，只读
-// flash : 代码段存储器，存放指令代码，存储空间大，初始化后可以修改，可读可写
+// code keywork : 将动画数组存放到存放到flash中的代码段，默认数据存放置RAM中的数据段
+// RAM(512Bytes) : 数据段存储器，存放全局变量，静态变量，存储空间小，初始化后可以修改，可读可写
+// flash(8K) : 代码段存储器，存放指令代码，存储空间大，初始化后不可以修改，只读
 unsigned char code Animation_1[] = {
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 0xFF,0x08,0x08,0x08,0xFF,0x00,0x0E,0x15,0x15,0x15,0x0C,0x00,0xFE,0x01,0x02,0x00,

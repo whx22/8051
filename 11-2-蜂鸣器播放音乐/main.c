@@ -5,7 +5,7 @@
 sbit Buzzer = P2^5;
 
 // 定义4分音符时长，单位ms
-#define SPEED 500
+#define SPEED 250
 
 #define P 	0
 #define L1	1
@@ -46,7 +46,7 @@ sbit Buzzer = P2^5;
 #define H7	36  
 
 // C自然大调小字组，小字1组，小字2组
-unsigned int FrequenceTable[] = {
+unsigned int code FrequenceTable[] = {
 	0, // 休止符 无声音
 	63628,63731,63835,63928,64021,64103,64185,64260,64331,64400,64463,64528,
 	64580,64633,64684,64732,64777,64820,64860,64898,64934,64968,65000,65030,
@@ -61,13 +61,48 @@ unsigned int FrequenceTable[] = {
 // 全音符	16
 
 // 小星星
-unsigned char Music_Star[] = {
+unsigned char code Music_Star[] = {
 	13, 4, 13, 4, 20, 4, 20, 4,
 	22, 4, 22, 4, 20, 8,
-	0, 4,
+	0, 4, // 休止符
 	18, 4, 18, 4, 17, 4, 17, 4,
 	15, 4, 15, 4, 13, 8,
 	0xFF // 音乐终止标志
+};
+
+// 天空之城
+unsigned char code Music_SkyCity[] = {
+	P, 4, P, 4, P, 4, M6, 2, M7, 2,
+   	H1, 4+2, M7, 2, H1, 4, H3, 4,
+	M7, 4+4+4, M3, 2, M3, 2,
+	M6, 4+2, M5, 2, M6, 4, H1, 4,
+	M5, 4+4+4, M3, 4,
+	M4, 4+2, M3, 2, M4, 4, H1, 4,
+	M3, 4+4, P, 2, H1, 2, H1, 2, H1, 2,
+	M7, 4+2, M4_, 2, M4_, 2, M7, 4,
+	M7, 4+4, P, 4, M6, 2, M7, 2,
+	H1, 4+2, M7, 2, H1, 4, H3, 4,
+	M7, 4+4+4, M3, 2, M3, 2,
+	M6, 4+2, M5, 2, M6, 4, H1, 4,
+	M5, 4+4+4, M2, 2, M3, 2,
+	M4, 4, H1, 2, M7, 2+2, H1, 2+2,
+	H2, 2, H2, 2, H3, 2, H1, 2+2, P, 4,
+	H1, 2, M7, 2, M6, 2, M6, 2, M7, 4, M5_, 4,
+	M6, 4+4+4, H1, 2, H2, 2,
+	H3, 4+2, H2, 2, H3, 4, H5, 4,
+	H2, 4+4+4, M5, 2, M5, 2,
+	H1, 4+2, M5, 2+4+4,
+	H4, 4, H3, 4, H2, 4, H1, 4,
+	H3, 4+4+4, H3, 4,
+	H6, 4+4, H5, 4, H5, 4,
+	H3, 2, H2, 2, H1, 4+4, P, 2, H1, 2,
+	H2, 4, H1, 2, H2, 2, H2, 4, H5, 4,
+	H3, 4+4+4, H3, 4,
+	H6, 4+4, H5, 4+4,
+	H3, 2, H2, 2, H1, 4+4, P, 2, H1, 2,
+	H2, 4, H1, 2, H2, 2+2, M7, 4,
+	M6, 4+4+4, M6, 2, M7, 2,  
+	0xFF
 };
 
 unsigned char FrequenceSelect, MusicSelect;
@@ -75,12 +110,12 @@ unsigned char FrequenceSelect, MusicSelect;
 void main() {
 	Timer0Init();
 	while (1) {
-		if (Music_Star[MusicSelect] != 0xFF) {
-			FrequenceSelect = Music_Star[MusicSelect]; // 当前Music数组数据为音符频率对应IO翻转周期
+		if (Music_SkyCity[MusicSelect] != 0xFF) {
+			FrequenceSelect = Music_SkyCity[MusicSelect]; // 当前Music数组数据为音符频率对应IO翻转周期
 	  		++MusicSelect;
-			Delay(SPEED / 4 * Music_Star[MusicSelect]); // 当前Music数组数据为音符持续时长
+			Delay(SPEED / 4 * Music_SkyCity[MusicSelect]); // 当前Music数组数据为音符持续时长
 	  		++MusicSelect;
-			// 实现相同音的间隔 
+			// 实现音符的间隔（间隔连续的两个相同音符） 
 			TR0 = 0; // 关闭定时器
 			Delay(5);
 			TR0 = 1; // 开启定时器

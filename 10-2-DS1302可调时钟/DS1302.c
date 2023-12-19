@@ -104,13 +104,12 @@ unsigned char DS1302_ReadByte(unsigned char Command) {
 }
 
 /**
- * @brief	使用单片机中的时间数组设置DS1302芯片存储的时间
+ * @brief	使用单片机中的时间数组（单片机数据区，RAM）设置DS1302芯片存储的时间
  * @param	无
  * @retval	无
  * @note	DS1302中时间使用BCD编码，
  			十进制(DEC)编码转为BCD编码
 			BCD = DEC / 10 * 16 + DEC % 10;
-
  */
 void DS1302_SetTime(void) {
 	// 关闭写保护
@@ -127,7 +126,7 @@ void DS1302_SetTime(void) {
 }
 
 /**
- * @brief  	读取DS1302中存储的时间并设置到单片机中时间数组中	
+ * @brief  	读取DS1302中存储的时间并设置到单片机中时间数组中（单片机数据区，RAM）	
  * @param  	无
  * @retval	无
  * @note	DS1302中时间使用BCD编码，

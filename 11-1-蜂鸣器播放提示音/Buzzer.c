@@ -2,7 +2,7 @@
 #include <INTRINS.H>
 
 /**
- * @brief	单片机通过P2^5端口控制ULN2003D驱动芯片驱动控制蜂鸣器发声
+ * @brief	单片机通过P2^5端口控制ULN2003D驱动芯片驱动控制有源蜂鸣器发声
  */
 sbit Buzzer = P2^5;
 

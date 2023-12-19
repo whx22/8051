@@ -1,9 +1,9 @@
 #include <REGX52.H>
 #include "Delay.h"
 
-sbit RCK = P3^5; // RCLK
-sbit SCK = P3^6; // SRCLK
-sbit SER = P3^4; // SER
+sbit RCK = P3^5; // RCLK 	register clock 数据写入边沿触发信号端口（一次写入八位）
+sbit SCK = P3^6; // SRCLK 	数据移位边沿触发信号端口
+sbit SER = P3^4; // SER		数据信号端口
 
 #define MATRIX_LED_PORT P0
 
@@ -31,9 +31,9 @@ void _74HC595_WriteByte(unsigned char Byte) {
  */
 void MatrixLED_ShowColumn(unsigned char Column,Data) {
 	_74HC595_WriteByte(Data);
-	MATRIX_LED_PORT = ~(0x80 >> Column);
+	MATRIX_LED_PORT = ~(0x80 >> Column); // 列选
 	Delay(1); // 延时显示
-	MATRIX_LED_PORT = 0xFF; // 位清零
+	MATRIX_LED_PORT = 0xFF; // 列选清零
 }
 
 void main() {
