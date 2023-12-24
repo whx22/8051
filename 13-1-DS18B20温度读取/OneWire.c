@@ -2,9 +2,14 @@
 
 sbit OneWire_DQ = P3^7;
 
+/**
+ * @brief   单总线初始化时序
+ * 
+ * @return  从机对主机的响应信号
+ */
 unsigned char OneWire_Init(void) {
     unsigned char i, AckBit;
-    // 初始化总线
+    // 主机释放总线控制权，初始化总线
     OneWire_DQ = 1;
     // 主机开始向从机发送数据传输开始初始化信号
     OneWire_DQ = 0;
@@ -18,6 +23,11 @@ unsigned char OneWire_Init(void) {
     return AckBit;
 }
 
+/**
+ * @brief   主机向从机发送1bit数据时序（至少60us）
+ * 
+ * @param   主机发送到单总线上的1bit数据（从机接受）
+ */
 void OneWire_SendBit(unsigned char Bit) {
     unsigned char i;
     // 主机请求总线控制权，提示从机数据传输开始
@@ -30,6 +40,11 @@ void OneWire_SendBit(unsigned char Bit) {
     OneWire_DQ = 1;
 }
 
+/**
+ * @brief   主机读取从机发送的1bit数据时序（至少60us）
+ * 
+ * @return  主机从单总线上读取的1bit数据（从机发送）
+ */
 unsigned char OneWire_ReceiveBit(void) {
     unsigned char i, Bit;
     // 主机请求总线控制权，提示从机数据传输开始
@@ -44,6 +59,11 @@ unsigned char OneWire_ReceiveBit(void) {
     return Bit;
 }
 
+/**
+ * @brief   主机向从机发送1Byte数据时序（低位在前）
+ * 
+ * @param   主机发送到单总线上的1Byte数据（从机接受）
+ */
 void OneWire_SendByte(unsigned char Byte) {
     unsigned char i;
     for (i = 0; i < 8; ++i) {
@@ -51,6 +71,11 @@ void OneWire_SendByte(unsigned char Byte) {
     }
 }
 
+/**
+ * @brief   主机读取从机发送的1Byte数据时序（低位在前）
+ * 
+ * @return  主机从单总线上读取的1Byte数据（从机发送）
+ */
 unsigned char OneWire_ReceiveByte(void) {
     unsigned char i, Byte = 0x00;
     for (i = 0; i < 8; ++i) {
