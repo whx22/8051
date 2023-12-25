@@ -10,7 +10,7 @@ void main() {
   LCD_ShowSignedNum(1, 12, -88, 2);
   LCD_ShowHexNum(2, 1, 0xA5, 2);
   LCD_ShowBinNum(2, 4, 0xA5, 8);
-  LCD_ShowChar(2, 13, 0xDF);
+  LCD_ShowChar(2, 13, 0xDF); // œ‘ æ…œ±Í `°£`
   LCD_ShowChar(2, 14, 'C');
   LCD_ShowString(1, 16, "Welcome to China!");
   while (1) {
