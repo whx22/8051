@@ -1,6 +1,7 @@
 #ifndef __IR_H__
 #define __IR_H__
 
+// 定义红外发射器（遥控器）按键对应命令码
 #define IR_POWER		  0x45
 #define IR_MODE			  0x46
 #define IR_MUTE			  0x47

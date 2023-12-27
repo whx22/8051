@@ -12,9 +12,9 @@ void main() {
   LCD_ShowString(1, 1, "00    00   000");
   IR_Init();
   while (1) {
-    // å®ç°è¿åŠ åŠŸèƒ½ï¼šæ”¶åˆ°repeatä¿¡å·
-    // IRé©±åŠ¨å‡½æ•°è®¾ç½®å†…éƒ¨å˜é‡IR_RepeatFlagï¼Œè¿›å…¥åˆ¤æ–­
-    // åŒæ—¶IRé©±åŠ¨å‡½æ•°å†…éƒ¨å˜é‡IR_Commandæœªè¢«æ”¹å˜
+    // ÊµÏÖÁ¬¼Ó¹¦ÄÜ£ºÊÕµ½repeatĞÅºÅ
+    // IRÇı¶¯º¯ÊıÉèÖÃÄÚ²¿±äÁ¿IR_RepeatFlag£¬½øÈëÅĞ¶Ï
+    // Í¬Ê±IRÇı¶¯º¯ÊıÄÚ²¿±äÁ¿IR_CommandÎ´±»¸Ä±ä
     if (IR_GetDataFlag() || IR_GetRepeatFlag()) {
       Address = IR_GetAddress();
       Command = IR_GetCommand();

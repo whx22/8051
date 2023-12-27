@@ -5,27 +5,35 @@ sbit Motor = P1^0;
 
 unsigned char Counter, Compare;
 
+/**
+ * @brief Ö±Á÷µç»ú³õÊ¼»¯
+ * 
+ */
 void Motor_Init(void) {
   Timer1_Init();
 }
 
+/**
+ * @brief ÉèÖÃÖ±Á÷µç»úËÙ¶È
+ * 
+ * @param Speed ÔÚmain.cÖĞ¶¨Òå£¬ĞèÒªÉèÖÃµÄËÙ¶È
+ */
 void Motor_SetSpeed(unsigned char Speed) {
 	Compare = Speed;
 }  
 
 /**
- * @brief Ã¿ï¿½ï¿½100usï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ğ¶Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+ * @brief Ã¿¸ô100us½øÈëÒ»´ÎÖĞ¶Ï´¦Àíº¯Êı 
  *  
  */
 void Timer1_Routine() interrupt 3 {
-	TL1 = 0x9C;		//ï¿½ï¿½ï¿½Ã¶ï¿½Ê±ï¿½ï¿½Öµ
-	TH1 = 0xFF;		//ï¿½ï¿½ï¿½Ã¶ï¿½Ê±ï¿½ï¿½Öµ
+	TL1 = 0x9C;		//ÉèÖÃ¶¨Ê±³õÖµ
+	TH1 = 0xFF;		//ÉèÖÃ¶¨Ê±³õÖµ
   ++Counter;
   Counter %= 100;
   if (Counter < Compare) {
-    Motor = 1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    Motor = 1; // µç»ú¹¤×÷
   } else {
-    Motor = 0; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    Motor = 0; // µç»ú²»¹¤×÷
   }
 }
-

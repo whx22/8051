@@ -25,11 +25,20 @@ unsigned char IR_RepeatFlag;
 unsigned char IR_Address;
 unsigned char IR_Command;
 
+/**
+ * @brief 红外信号接受器初始化
+ * 
+ */
 void IR_Init(void) {
   Timer0_Init();
   Int0_Init();
 }
 
+/**
+ * @brief 单片机获取红外信号接收器接受到数据标志位
+ * 
+ * @return unsigned char 是否接受到数据
+ */
 unsigned char IR_GetDataFlag(void) {
   if (IR_DataFlag) {
     IR_DataFlag = 0;
@@ -38,6 +47,11 @@ unsigned char IR_GetDataFlag(void) {
   return 0;
 }
 
+/**
+ * @brief 单片机获取红外信号接收器接受到重复标志位
+ * 
+ * @return unsigned char 是否接受到重复信号
+ */
 unsigned char IR_GetRepeatFlag(void) {
   if (IR_RepeatFlag) {
     IR_RepeatFlag = 0;
@@ -46,36 +60,50 @@ unsigned char IR_GetRepeatFlag(void) {
   return 0;
 }
 
+/**
+ * @brief 接受到数据信号或重复信号后，获取红外发射器地址数据（NEC协议规定）
+ * 
+ * @return unsigned char 红外发射器地址编码
+ */
 unsigned char IR_GetAddress(void) {
   return IR_Address;
 }
 
+/**
+ * @brief 接受到数据信号或重复信号后，获取红外发射器命令数据
+ * 
+ * @return unsigned char 红外发射器接受到的命令数据
+ */
 unsigned char IR_GetCommand(void) {
   return IR_Command;
 }
 
+/**
+ * @brief 红外接受器触发的外部中断0的中断处理函数
+ *        外部中断0初始化过程中设置为下降沿触发
+ */
 void Int0_Rountine(void) interrupt 0 {
-// 高电平，状态0，进入转态1
+// 状态0：空闲状态转为判断状态
   if (IR_State == 0) {
     Timer0_SetCounter(0);
     Timer0_Run(1);
     IR_State = 1;
   } else if (IR_State == 1) {
-// 低电平，状态1，进入判断
+// 状态1：判断状态
     IR_Time = Timer0_GetCounter(); // 获取间隔时间，进行判断
     Timer0_SetCounter(0); // 重置定时器0
-    if (IR_Time > 13500-500 && IR_Time < 13500+500) { // Start
+    if (IR_Time > 13500-500 && IR_Time < 13500+500) { // NEC编码Start
       P2 = 0;
       IR_State = 2; // 进入数据传输状态
-    } else if (IR_Time > 11250-500 && IR_Time < 11250+500) { // Repeat
+    } else if (IR_Time > 11250-500 && IR_Time < 11250+500) { // NEC编码Repeat
       IR_RepeatFlag = 1; // 设置重复标志位
       Timer0_Run(0); // 关闭定时器
       IR_State = 0; // 进入空闲状态
     } else {
-      IR_State = 1; // 检码错误，恢复检码状态
+      IR_State = 1; // 检码错误，恢复判断状态
     }
   } else if (IR_State == 2) {
-// 开始检码
+// 状态2：数据传输状态
     IR_Time = Timer0_GetCounter();
     Timer0_SetCounter(0);
     if (IR_Time > 1120-500 && IR_Time < 1120-500) { // NEC编码0
